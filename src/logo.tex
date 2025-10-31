@@ -1,0 +1,68 @@
+\definecolor[derivkit-black][h=000000]
+\definecolor[derivkit-blue][h=3b9ab2]
+\definecolor[derivkit-yellow][h=e1af00]
+\definecolor[derivkit-red][h=f21901]
+
+\startMPinclusions
+
+  u = 1cm;
+
+  path p;
+  p = point 3.25 of fullsquare
+     .. point 2.75 of fullsquare
+     .. center fullsquare
+     .. point 0.25 of fullsquare
+     .. point 3.75 of fullsquare
+     .. center fullsquare
+     .. 0.75[point 3 of fullsquare, point 1 of fullsquare]
+     .. point 0.8 of fullsquare;
+
+  path q;
+  q = point 2 of p -- point 2 of fullsquare;
+
+  def draw_logo(expr c) =
+    for i = 0 step 0.01 until length p:
+        t := sind ((360/length p) * i);
+        draw (point i of p) scaled u withpen pencircle scaled t;
+    endfor;
+
+    ahvariant := 2;
+    ahdimple := .5;
+
+    draw p scaled u withpen pencircle scaled 1.2 withcolor white;
+    drawarrow q scaled u withpen pencircle scaled 1.2 withcolor white;
+
+    draw p scaled u withcolor c;
+    drawarrow q scaled u withcolor c;
+  enddef;
+
+\stopMPinclusions
+
+\starttext
+
+  \startMPpage
+    picture logo_black;
+    logo_black = image(draw_logo(\MPcolor{derivkit-black}));
+    draw logo_black;
+    setbounds currentpicture to bbox(logo_black);
+  \stopMPpage
+  \startMPpage
+    picture logo_blue;
+    logo_blue = image(draw_logo(\MPcolor{derivkit-blue}));
+    draw logo_blue;
+    setbounds currentpicture to bbox(logo_blue);
+  \stopMPpage
+  \startMPpage
+    picture logo_yellow;
+    logo_yellow = image(draw_logo(\MPcolor{derivkit-yellow}));
+    draw logo_yellow;
+    setbounds currentpicture to bbox(logo_yellow);
+  \stopMPpage
+  \startMPpage
+    picture logo_red;
+    logo_red = image(draw_logo(\MPcolor{derivkit-red}));
+    draw logo_red;
+    setbounds currentpicture to bbox(logo_red);
+  \stopMPpage
+
+\stoptext
